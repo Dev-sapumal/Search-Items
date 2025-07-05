@@ -1,17 +1,39 @@
+
 const searchInput = document.getElementById('searchInput');
 const resultsContainer = document.getElementById('resultsContainer');
 const notFoundMessage = document.getElementById('notFound');
 const clearBtn = document.querySelector('.clear-btn');
 
-function displayResults(filteredItems) {
+// Pagination constants
+const itemsPerPage = 9;
+let currentPage = 1;
+let filteredItems = [];
+
+const paginationContainer = document.createElement('div');
+paginationContainer.className = 'pagination';
+document.body.appendChild(paginationContainer);
+
+// Sort data initially by newest date
+const sortedAdventures = adventures.slice().sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+function displayResults(items, page = 1) {
   resultsContainer.innerHTML = '';
-  if (filteredItems.length === 0) {
+  paginationContainer.innerHTML = '';
+
+  const totalItems = items.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow = items.slice(startIndex, endIndex);
+
+  if (itemsToShow.length === 0) {
     notFoundMessage.style.display = 'block';
     return;
   }
   notFoundMessage.style.display = 'none';
 
-  filteredItems.forEach(item => {
+  // Show cards
+  itemsToShow.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -31,20 +53,37 @@ function displayResults(filteredItems) {
     `;
     resultsContainer.appendChild(card);
   });
+
+  // Create page buttons
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.className = i === page ? 'page-btn active' : 'page-btn';
+    btn.addEventListener('click', () => {
+      currentPage = i;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      displayResults(items, currentPage);
+    });
+    paginationContainer.appendChild(btn);
+  }
 }
 
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.trim().toLowerCase();
-  const filtered = adventures.filter(item =>
+  filteredItems = sortedAdventures.filter(item =>
     item.name.toLowerCase().includes(query)
   );
-  displayResults(filtered);
+  currentPage = 1;
+  displayResults(filteredItems, currentPage);
 });
 
 clearBtn.addEventListener('click', () => {
   searchInput.value = '';
-  displayResults(adventures);
+  filteredItems = sortedAdventures;
+  currentPage = 1;
+  displayResults(filteredItems, currentPage);
 });
 
-// Load all initially
-displayResults(adventures);
+// Initial load
+filteredItems = sortedAdventures;
+displayResults(filteredItems, currentPage);

@@ -132,3 +132,30 @@
   color: gray;
   margin-top: 20px;
 }
+
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 40px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.page-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.page-btn:hover {
+  background-color: #ddd;
+}
+.page-btn.active {
+  background-color: #007BFF;
+  color: white;
+  font-weight: bold;
+  border: none;
+}

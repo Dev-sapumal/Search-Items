@@ -11,7 +11,7 @@ const adventures = [
     "status": "View More details",
     "Stock": "Stock Available",
     "New_item": "Yes",
-    "Date": "2023-10-01"
+    "Date": "2020-10-01"
   },
   {
     "name": "00160",
