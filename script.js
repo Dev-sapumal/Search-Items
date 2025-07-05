@@ -644,13 +644,14 @@ function displayResults(items, page = 1) {
     card.className = 'card';
 
     const isNew = item.New_item && item.New_item.toLowerCase() === 'yes';
-    const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i>' : '';
+    const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i><span class="new" >New</span>' : '';
 
     card.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="card-body">
         <div class="card-title-line">
-          <h2 class="new-icon">${newIcon}${item.name}</h2>
+        
+          <h2 class="new-icon">${item.name} ${newIcon}</h2>
           <i class="fa-regular fa-heart favorite-icon" data-id="${item.name}"></i>
         </div>
         <p><strong>Full Name:</strong> ${item.fname}</p>

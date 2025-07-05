@@ -150,7 +150,7 @@ const adventures = [
     "link": "template.html",
     "status": "View More details",
     "Stock": "Available",
-    "New_item": "yes",
+    "New_item": "no",
     "Date": "2024-01-25"
   },
   {

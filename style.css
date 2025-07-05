@@ -188,7 +188,7 @@
 }
 
 .favorite-icon.fa-solid {
-  color: red;
+  color: rgb(224, 9, 9);
 }
 
 .notification-toast {
@@ -217,7 +217,18 @@
 }
 
 .new-item-icon{
-  color: rgb(141, 66, 16);
-  font-size: 18px;
+  color:red;
+  font-size: 10px;
   margin-right: 6px;
+  bottom: 4px;
+  font-weight: bold;
+  position: relative;
+;
+}
+.new {
+  color: red;
+  font-size: 16px;
+  bottom: 2px;
+  font-weight: bold;
+  position: relative;
 }
