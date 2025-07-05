@@ -50,6 +50,7 @@
   justify-content: center;
   margin: 20px auto;
   gap: 10px;
+  padding: 0 10px;
 }
 
 .search-input {
@@ -63,11 +64,11 @@
   border-color: lightseagreen;
 }
 .clear-btn {
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: none;
   background-color: var(--button-color);
   color: white;
-  border-radius: 5px;
+  border-radius: 1000px;
   cursor: pointer;
 }
 .clear-btn:hover {
@@ -158,4 +159,13 @@
   color: white;
   font-weight: bold;
   border: none;
+}
+
+
+.category-dropdown {
+  padding: 3;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100px;
 }
