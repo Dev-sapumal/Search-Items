@@ -10,8 +10,8 @@ const adventures = [
     "link": "template.html",
     "status": "View More details",
     "Stock": "Stock Available",
-    "New_item": "Yes",
-    "Date": "2020-10-01"
+    "New_item": "yes",
+    "Date": "2030-10-01"
   },
   {
     "name": "00160",

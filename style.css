@@ -33,8 +33,8 @@
 }
 
 .favorites-btn {
-  position: absolute;
-  right: 30px;
+  position: relative;
+  left: 30px;
   background-color: #28a745;
   color: white;
   padding: 10px 20px;
@@ -193,8 +193,8 @@
 
 .notification-toast {
   position: fixed;
-  top: 20px;
-  left: -300px;
+  top: -50px;
+  left: 50px;
   color: white;
   padding: 12px 20px;
   font-size: 14px;
@@ -204,7 +204,8 @@
 }
 
 .notification-toast.show {
-  left: 20px;
+  /* left: 20px; */
+  top: 50px;
 }
 
 .notification-toast.success {
@@ -215,3 +216,8 @@
   background-color: #d7263d;
 }
 
+.new-item-icon{
+  color: rgb(141, 66, 16);
+  font-size: 18px;
+  margin-right: 6px;
+}
