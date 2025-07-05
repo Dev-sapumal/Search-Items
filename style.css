@@ -20,7 +20,8 @@
 }
 
 .header {
-  display: flex;
+  display:flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -169,3 +170,48 @@
   font-size: 14px;
   width: 100px;
 }
+
+
+
+
+.card-title-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.favorite-icon {
+  font-size: 18px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.favorite-icon.fa-solid {
+  color: red;
+}
+
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  left: -300px;
+  color: white;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  z-index: 9999;
+  transition: all 0.5s ease;
+}
+
+.notification-toast.show {
+  left: 20px;
+}
+
+.notification-toast.success {
+  background-color: #28a745;
+}
+
+.notification-toast.error {
+  background-color: #d7263d;
+}
+

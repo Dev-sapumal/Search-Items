@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Favorites</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <h1 style="text-align:center;">My Favorite Items</h1>
+  <div id="favoritesContainer" class="card-container"></div>
+
+  <script>
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const container = document.getElementById('favoritesContainer');
+
+    if (favorites.length === 0) {
+      container.innerHTML = '<p style="text-align:center;">No favorites yet.</p>';
+    } else {
+      favorites.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="card-body">
+            <h2>${item.name}</h2>
+            <p><strong>Full Name:</strong> ${item.fname}</p>
+            <p><strong>Category:</strong> ${item.category}</p>
+            <p><strong>Date:</strong> ${item.Date}</p>
+            <a href="${item.link}" target="_blank" class="view-btn">${item.status}</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
