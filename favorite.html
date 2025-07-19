@@ -3,38 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>My Favorites</title>
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <style>
-    .remove-btn {
-      background-color: #d7263d;
-      color: white;
-      padding: 8px 12px;
-      margin: 10px auto 0;
-      display: block;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      text-align: center;
-      width: 90%;
-    }
-
-    .remove-btn:hover {
-      background-color: #a81c2b;
-    }
-
     .clear-all-btn {
-      position: absolute;
-      left: 20px;
-      top: 25px;
       background-color: #ff4136;
       color: white;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
-      text-decoration: none;
-      font-size: 15px;
+      font-size: 14px;
       cursor: pointer;
+      margin: 10px;
+      font-weight: bold;
+      border: none;
     }
 
     .clear-all-btn:hover {
@@ -54,43 +35,34 @@
       object-fit: contain;
     }
 
-    .notification-toast {
-      position: fixed;
-      top: -50px;
-      left: 50px;
-      color: white;
-      padding: 12px 20px;
-      font-size: 14px;
-      border-radius: 5px;
-      z-index: 9999;
-      transition: all 0.5s ease;
-    }
-
-    .notification-toast.show {
-      top: 50px;
-    }
-
-    .notification-toast.success {
-      background-color: #28a745;
-    }
-
-    .notification-toast.error {
+    .card .remove-btn {
       background-color: #d7263d;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      margin: 10px auto 0;
+      width: 90%;
+    }
+
+    .card .remove-btn:hover {
+      background-color: #a81c2b;
     }
 
     @media screen and (max-width: 600px) {
-      .clear-all-btn {
-        position: static;
-        margin: 10px auto;
-        width: 90%;
-        display: block;
+      .header {
+        flex-direction: column;
         text-align: center;
       }
 
-      .notification-toast {
-        left: 10px;
-        right: 10px;
-        width: calc(100% - 20px);
+      .clear-all-btn, .favorites-btn {
+        width: 90%;
+        margin-top: 10px;
+        position: static;
       }
     }
   </style>
@@ -103,13 +75,13 @@
     <button class="clear-all-btn" onclick="clearAllFavorites()">Clear All</button>
   </header>
 
+  <div id="toast" class="notification-toast"></div>
   <div class="logo-container">
     <img src="source/fv.jpg" alt="Web Logo">
   </div>
-
   <div id="favoritesContainer" class="item-grid"></div>
 
-  <div id="toast" class="notification-toast"></div>
+
 
   <script>
     let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
