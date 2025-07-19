@@ -2,7 +2,7 @@ const adventures = [
   {
     "name": "00133",
     "fname": "00133TW0204",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Black | White | Blue",
     "sizes": "4 5 6 7 8",
     "forthe": "Women",
@@ -16,7 +16,7 @@ const adventures = [
   {
     "name": "00160",
     "fname": "00144TW0215",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Black | Grey | Blue",
     "sizes": "4 5 6 7 8",
     "forthe": "Women",
@@ -114,7 +114,7 @@ const adventures = [
   {
     "name": "00167",
     "fname": "00145TW0222",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Purple | Black",
     "sizes": "4 5 6",
     "forthe": "Women",
@@ -184,7 +184,7 @@ const adventures = [
   {
     "name": "00167",
     "fname": "00145TW0222",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Purple | Black",
     "sizes": "4 5 6",
     "forthe": "Women",
@@ -254,7 +254,7 @@ const adventures = [
   {
     "name": "00167",
     "fname": "00145TW0222",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Purple | Black",
     "sizes": "4 5 6",
     "forthe": "Women",
@@ -324,7 +324,7 @@ const adventures = [
   {
     "name": "00167",
     "fname": "00145TW0222",
-    "category": "Tean Walk",
+    "category": "Teen Walk",
     "colors": "Purple | Black",
     "sizes": "4 5 6",
     "forthe": "Women",

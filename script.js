@@ -746,14 +746,14 @@ function setupFavoriteButtons() {
         icon.classList.remove('fa-solid');
         icon.classList.add('fa-regular');
         icon.style.color = 'gray';
-        showNotification(`${item.name} removed from favorites`, 'error');
+        showNotification(`${item.name} removed from favorites🥺💔`, 'error');
       } else {
         favorites.push(item);
         localStorage.setItem('favorites', JSON.stringify(favorites));
         icon.classList.remove('fa-regular');
         icon.classList.add('fa-solid');
         icon.style.color = 'red';
-        showNotification(`${item.name} added to favorites`, 'success');
+        showNotification(`${item.name}✨ added to favorites 🥳`, 'success');
       }
     });
   });

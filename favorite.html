@@ -2,37 +2,192 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Favorites</title>
+  <title>My Favorites</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .remove-btn {
+      background-color: #d7263d;
+      color: white;
+      padding: 8px 12px;
+      margin: 10px auto 0;
+      display: block;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      width: 90%;
+    }
+
+    .remove-btn:hover {
+      background-color: #a81c2b;
+    }
+
+    .clear-all-btn {
+      position: absolute;
+      left: 20px;
+      top: 25px;
+      background-color: #ff4136;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .clear-all-btn:hover {
+      background-color: #c7251b;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .notification-toast {
+      position: fixed;
+      top: -50px;
+      left: 50px;
+      color: white;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      z-index: 9999;
+      transition: all 0.5s ease;
+    }
+
+    .notification-toast.show {
+      top: 50px;
+    }
+
+    .notification-toast.success {
+      background-color: #28a745;
+    }
+
+    .notification-toast.error {
+      background-color: #d7263d;
+    }
+
+    @media screen and (max-width: 600px) {
+      .clear-all-btn {
+        position: static;
+        margin: 10px auto;
+        width: 90%;
+        display: block;
+        text-align: center;
+      }
+
+      .notification-toast {
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+      }
+    }
+  </style>
 </head>
-<body>
-  <h1 style="text-align:center;">My Favorite Items</h1>
-  <div id="favoritesContainer" class="card-container"></div>
+<body class="item-page">
+
+  <header class="header">
+    <h1 class="page-heading">My Favorite Items</h1>
+    <a href="index.html" class="favorites-btn">Back to Search</a>
+    <button class="clear-all-btn" onclick="clearAllFavorites()">Clear All</button>
+  </header>
+
+  <div class="logo-container">
+    <img src="source/fv.jpg" alt="Web Logo">
+  </div>
+
+  <div id="favoritesContainer" class="item-grid"></div>
+
+  <div id="toast" class="notification-toast"></div>
 
   <script>
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     const container = document.getElementById('favoritesContainer');
 
-    if (favorites.length === 0) {
-      container.innerHTML = '<p style="text-align:center;">No favorites yet.</p>';
-    } else {
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `notification-toast ${type} show`;
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function saveFavorites(newFavorites) {
+      localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    }
+
+    function clearAllFavorites() {
+      if (favorites.length > 0) {
+        favorites = [];
+        saveFavorites(favorites);
+        renderFavorites();
+        showToast('All favorites cleared.', 'error');
+      }
+    }
+
+    function renderFavorites() {
+      container.innerHTML = '';
+
+      if (favorites.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">No favorites yet.</p>';
+        return;
+      }
+
       favorites.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
+
+        const newIcon = item.isNew ? '<span class="new">NEW</span>' : '';
+
         card.innerHTML = `
           <img src="${item.image}" alt="${item.name}">
           <div class="card-body">
-            <h2>${item.name}</h2>
+            <div class="card-title-line">
+              <h2 class="new-icon">${item.name} ${newIcon}</h2>
+              <i class="fa-solid fa-heart favorite-icon" data-id="${item.name}"></i>
+            </div>
             <p><strong>Full Name:</strong> ${item.fname}</p>
             <p><strong>Category:</strong> ${item.category}</p>
+            <p><strong>Colors:</strong> ${item.colors}</p>
+            <p><strong>Sizes:</strong> ${item.sizes}</p>
+            <p><strong>For:</strong> ${item.forthe}</p>
+            <p><strong>Stock:</strong> ${item.Stock}</p>
             <p><strong>Date:</strong> ${item.Date}</p>
             <a href="${item.link}" target="_blank" class="view-btn">${item.status}</a>
+            <button class="remove-btn" data-id="${item.name}">Remove from Favorites</button>
           </div>
         `;
+
         container.appendChild(card);
       });
+
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const name = btn.dataset.id;
+          const index = favorites.findIndex(item => item.name === name);
+          if (index !== -1) {
+            favorites.splice(index, 1);
+            saveFavorites(favorites);
+            renderFavorites();
+            showToast(`${name} removed from favorites`, 'error');
+          }
+        });
+      });
     }
+
+    renderFavorites();
   </script>
 </body>
 </html>
