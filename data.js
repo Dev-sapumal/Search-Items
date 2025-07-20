@@ -11,7 +11,10 @@ const adventures = [
     "status": "View Image",
     "Stock": "Stock Available",
     "New_item": "yes",
-    "Date": "2030-10-01"
+    "Date": "2030-10-01",
+    "extraimage1": "./source/133.jpg",
+    "extraimage2": "./source/133.jpg",
+    "extraimage3": "./source/133.jpg",
   },
   {
     "name": "00160",

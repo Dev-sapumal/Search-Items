@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Image</title>
+  <link rel="stylesheet" href="viewimagestyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <button class="back-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <h1 id="itemTitle"></h1>
+    <div id="itemDetails" class="details"></div>
+    <div id="imageGallery" class="image-gallery"></div>
+  </div>
+
+  <script>
+    const itemData = JSON.parse(localStorage.getItem('selectedItem'));
+    const titleEl = document.getElementById('itemTitle');
+    const detailsEl = document.getElementById('itemDetails');
+    const galleryEl = document.getElementById('imageGallery');
+
+    if (!itemData) {
+      titleEl.textContent = 'No item data found.';
+    } else {
+      titleEl.textContent = itemData.name;
+
+      // Item details
+      detailsEl.innerHTML = `
+        <p><strong>Full Name:</strong> ${itemData.fname}</p>
+        <p><strong>Category:</strong> ${itemData.category}</p>
+        <p><strong>Colors:</strong> ${itemData.colors}</p>
+        <p><strong>Sizes:</strong> ${itemData.sizes}</p>
+        <p><strong>For:</strong> ${itemData.forthe}</p>
+        <p><strong>Stock:</strong> ${itemData.Stock}</p>
+        <p><strong>Date:</strong> ${itemData.Date}</p>
+      `;
+
+      // Show all images
+      const images = [];
+      if (itemData.image) images.push(itemData.image);
+      for (let i = 1; i <= 10; i++) {
+        const key = `extraimage${i}`;
+        if (itemData[key]) {
+          images.push(itemData[key]);
+        }
+      }
+
+      galleryEl.innerHTML = images.map(img => `
+        <div class="image-wrapper">
+          <img src="${img}" alt="Related Image">
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

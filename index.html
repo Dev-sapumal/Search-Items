@@ -4,10 +4,450 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Item Search</title>
-  <link rel="stylesheet" href="style.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Your original styling with improvements */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #202020;
+      --accent-color: rgb(255, 196, 0);
+      --button-color: #007BFF;
+      --button-hover: #631010;
+      --card-bg: white;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .item-page {
+      background-color: var(--bg-color);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .page-heading {
+      font-size: 2em;
+    }
+
+    .favorites-btn {
+      position: absolute;
+      right: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    }
+
+    @media screen and (max-width: 600px) {
+      .favorites-btn {
+        position: static;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .favorites-btn:hover {
+      background-color: #0b4e19;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 20px;
+    }
+
+    .search-input {
+      width: 300px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    @media screen and (max-width: 600px) {
+      .search-input {
+        width: 80%;
+        max-width: 400px;
+      }
+    }
+
+    .search-input:hover, .search-input:focus {
+      border-color: lightseagreen;
+      outline: none;
+    }
+
+    .category-dropdown {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      min-width: 120px;
+    }
+
+    .clear-btn {
+      padding: 10px 15px;
+      border: none;
+      background-color: var(--button-color);
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .clear-btn:hover {
+      background-color: var(--button-hover);
+    }
+
+    .item-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+      padding: 0 2em;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      max-width: 300px;
+      transition: transform 0.3s;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    .card img.error {
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card-body p {
+      font-size: 13px;
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+
+    .card-title-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .favorite-icon {
+      font-size: 18px;
+      color: gray;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .favorite-icon:hover {
+      transform: scale(1.2);
+    }
+
+    .favorite-icon.fa-solid {
+      color: rgb(224, 9, 9);
+    }
+
+    .new-item-icon {
+      color: var(--accent-color);
+      font-size: 12px;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    .new {
+      color: var(--accent-color);
+      font-size: 12px;
+      font-weight: bold;
+      background: rgba(255, 196, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 5px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .view-btn {
+      display: block;
+      text-align: center;
+      margin: 15px auto 0;
+      padding: 10px;
+      background-color: var(--accent-color);
+      border-radius: 5px;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    .view-btn:hover {
+      background-color: gold;
+    }
+
+    .no-results {
+      text-align: center;
+      font-size: 16px;
+      color: gray;
+      margin-top: 40px;
+      display: none;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0 40px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .page-btn:hover {
+      background-color: #ddd;
+    }
+
+    .page-btn.active {
+      background-color: #007BFF;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+
+    .notification-toast {
+      position: fixed;
+      top: -50px;
+      left: 50px;
+      color: white;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      z-index: 9999;
+      transition: all 0.5s ease;
+    }
+
+    .notification-toast.show {
+      top: 50px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .notification-toast {
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+      }
+    }
+
+    .notification-toast.success {
+      background-color: #28a745;
+    }
+
+    .notification-toast.error {
+      background-color: #d7263d;
+    }
+
+    /* Image Modal Styles */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      position: relative;
+      margin: auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      height: 90%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: white;
+    }
+
+    .main-image-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .main-image {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .thumbnail-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .thumbnail:hover {
+      border-color: var(--accent-color);
+      transform: scale(1.05);
+    }
+
+    .thumbnail.active {
+      border-color: var(--accent-color);
+    }
+
+    .image-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      font-size: 24px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+
+    .image-nav:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .modal-content {
+        padding: 10px;
+      }
+      
+      .thumbnail {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .image-nav {
+        font-size: 20px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
 </head>
 <body class="item-page">
 
@@ -18,8 +458,8 @@
 
   <div class="search-box">
     <input type="text" id="searchInput" class="search-input" placeholder="Search by Code (e.g., 00133)">
-        <select id="categoryFilter" class="category-dropdown">
-      <option value="">All</option>
+    <select id="categoryFilter" class="category-dropdown">
+      <option value="">All Categories</option>
     </select>
     <button class="clear-btn"><i class="fa-solid fa-trash"></i></button>
   </div>
@@ -27,7 +467,759 @@
   <div id="resultsContainer" class="item-grid"></div>
   <div id="notFound" class="no-results">No matching items found. 🥺</div>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <!-- Image Modal -->
+  <div id="imageModal" class="image-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Item Images</div>
+        <span class="close" id="closeModal">&times;</span>
+      </div>
+      <div class="main-image-container">
+        <button class="image-nav prev" id="prevImage">&#10094;</button>
+        <img id="mainModalImage" class="main-image" src="" alt="Product Image">
+        <button class="image-nav next" id="nextImage">&#10095;</button>
+      </div>
+      <div class="thumbnail-container" id="thumbnailContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    // Sample data - replace this with your actual data from data.js
+const adventures = [
+  {
+    "name": "00133",
+    "fname": "00133TW0204",
+    "category": "Teen Walk",
+    "colors": "Black | White | Blue",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "yes",
+    "Date": "2030-10-01",
+    "extraimage1": "./source/133.jpg",
+    "extraimage2": "./source/160.jpg",
+    "extraimage3": "./source/141.jpg",
+  },
+  {
+    "name": "00160",
+    "fname": "00144TW0215",
+    "category": "Teen Walk",
+    "colors": "Black | Grey | Blue",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/160.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2024-03-01"
+  },
+  {
+    "name": "00141",
+    "fname": "00390LL0216",
+    "category": "LL",
+    "colors": "Red | White",
+    "sizes": "5 6 7",
+    "forthe": "Men",
+    "image": "./source/141.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Not Available",
+    "New_item": "mo",
+    "Date": "2024-02-10"
+  },
+  {
+    "name": "00162",
+    "fname": "01669ST0217",
+    "category": "Style",
+    "colors": "Black | Gold",
+    "sizes": "6 7 8 9",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2022-09-05"
+  },
+  {
+    "name": "00163",
+    "fname": "01664ST0218",
+    "category": "Style",
+    "colors": "Pink | Silver",
+    "sizes": "4 5 6",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2021-12-12"
+  },
+  {
+    "name": "00164",
+    "fname": "00202CH0219",
+    "category": "Children",
+    "colors": "Blue | White | Yellow",
+    "sizes": "3 4 5",
+    "forthe": "Kids",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Not Available",
+    "New_item": "no",
+    "Date": "2020-08-20"
+  },
+  {
+    "name": "00165",
+    "fname": "01671ST0220",
+    "category": "Style",
+    "colors": "Green | Black",
+    "sizes": "6 7 8",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "mo",
+    "Date": "2023-04-18"
+  },
+  {
+    "name": "00166",
+    "fname": "00391LL0221",
+    "category": "LL",
+    "colors": "Brown | White",
+    "sizes": "5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2023-06-30"
+  },
+  {
+    "name": "00167",
+    "fname": "00145TW0222",
+    "category": "Teen Walk",
+    "colors": "Purple | Black",
+    "sizes": "4 5 6",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Not Available",
+    "New_item": "no",
+    "Date": "2022-10-10"
+  },
+  {
+    "name": "00168",
+    "fname": "00203CH0223",
+    "category": "Children",
+    "colors": "Red | Yellow",
+    "sizes": "2 3 4",
+    "forthe": "Kids",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2021-03-01"
+  },
+  {
+    "name": "00169",
+    "fname": "01672ST0224",
+    "category": "Style",
+    "colors": "Grey | Black",
+    "sizes": "6 7 8 9",
+    "forthe": "Men",
+    "image": "./source/169.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "no",
+    "Date": "2024-01-25"
+  },
+  {
+    "name": "00165",
+    "fname": "01671ST0220",
+    "category": "Style",
+    "colors": "Green | Black",
+    "sizes": "6 7 8",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "mo",
+    "Date": "2023-04-18"
+  },
+  {
+    "name": "00166",
+    "fname": "00391LL0221",
+    "category": "LL",
+    "colors": "Brown | White",
+    "sizes": "5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2023-06-30"
+  },
+  {
+    "name": "00167",
+    "fname": "00145TW0222",
+    "category": "Teen Walk",
+    "colors": "Purple | Black",
+    "sizes": "4 5 6",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Not Available",
+    "New_item": "no",
+    "Date": "2022-10-10"
+  },
+  {
+    "name": "00168",
+    "fname": "00203CH0223",
+    "category": "Children",
+    "colors": "Red | Yellow",
+    "sizes": "2 3 4",
+    "forthe": "Kids",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2021-03-01"
+  },
+  {
+    "name": "00169",
+    "fname": "01672ST0224",
+    "category": "Style",
+    "colors": "Grey | Black",
+    "sizes": "6 7 8 9",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2024-01-25"
+  },
+  {
+    "name": "00165",
+    "fname": "01671ST0220",
+    "category": "Style",
+    "colors": "Green | Black",
+    "sizes": "6 7 8",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "mo",
+    "Date": "2023-04-18"
+  },
+  {
+    "name": "00166",
+    "fname": "00391LL0221",
+    "category": "LL",
+    "colors": "Brown | White",
+    "sizes": "5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2023-06-30"
+  },
+  {
+    "name": "00167",
+    "fname": "00145TW0222",
+    "category": "Teen Walk",
+    "colors": "Purple | Black",
+    "sizes": "4 5 6",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Not Available",
+    "New_item": "no",
+    "Date": "2022-10-10"
+  },
+  {
+    "name": "00168",
+    "fname": "00203CH0223",
+    "category": "Children",
+    "colors": "Red | Yellow",
+    "sizes": "2 3 4",
+    "forthe": "Kids",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2021-03-01"
+  },
+  {
+    "name": "00169",
+    "fname": "01672ST0224",
+    "category": "Style",
+    "colors": "Grey | Black",
+    "sizes": "6 7 8 9",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2024-01-25"
+  },
+  {
+    "name": "00165",
+    "fname": "01671ST0220",
+    "category": "Style",
+    "colors": "Green | Black",
+    "sizes": "6 7 8",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "mo",
+    "Date": "2023-04-18"
+  },
+  {
+    "name": "00166",
+    "fname": "00391LL0221",
+    "category": "LL",
+    "colors": "Brown | White",
+    "sizes": "5 6 7 8",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2023-06-30"
+  },
+  {
+    "name": "00167",
+    "fname": "00145TW0222",
+    "category": "Teen Walk",
+    "colors": "Purple | Black",
+    "sizes": "4 5 6",
+    "forthe": "Women",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Not Available",
+    "New_item": "no",
+    "Date": "2022-10-10"
+  },
+  {
+    "name": "00168",
+    "fname": "00203CH0223",
+    "category": "Children",
+    "colors": "Red | Yellow",
+    "sizes": "2 3 4",
+    "forthe": "Kids",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2021-03-01"
+  },
+  {
+    "name": "00169",
+    "fname": "01672ST0224",
+    "category": "Style",
+    "colors": "Grey | Black",
+    "sizes": "6 7 8 9",
+    "forthe": "Men",
+    "image": "./source/133.jpg",
+    "link": "template.html",
+    "status": "View More details",
+    "Stock": "Available",
+    "New_item": "yes",
+    "Date": "2024-01-25"
+  }
+];
+
+
+    // DOM elements
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const notFoundMessage = document.getElementById('notFound');
+    const clearBtn = document.querySelector('.clear-btn');
+
+    // Modal elements
+    const imageModal = document.getElementById('imageModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const mainModalImage = document.getElementById('mainModalImage');
+    const closeModal = document.getElementById('closeModal');
+    const prevImage = document.getElementById('prevImage');
+    const nextImage = document.getElementById('nextImage');
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+
+    // Pagination setup
+    const itemsPerPage = 5;
+    let currentPage = 1;
+    let filteredItems = [];
+    let currentImages = [];
+    let currentImageIndex = 0;
+
+    // Create pagination container
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    document.body.appendChild(paginationContainer);
+
+    // Sort by Date (newest first)
+    const sortedAdventures = adventures.slice().sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+    // Image error handling
+    function handleImageError(img, fallback = './source/placeholder.jpg') {
+      img.onerror = null;
+      img.src = fallback;
+      img.alt = 'Image not found';
+      img.style.background = '#f8f9fa';
+      img.style.color = '#6c757d';
+    }
+
+    // Get all images for an item
+    function getItemImages(item) {
+      const images = [item.image];
+      if (item.extraimage1) images.push(item.extraimage1);
+      if (item.extraimage2) images.push(item.extraimage2);
+      if (item.extraimage3) images.push(item.extraimage3);
+      return images.filter(img => img && img.trim() !== '');
+    }
+
+    // Open image modal
+    function openImageModal(item) {
+      currentImages = getItemImages(item);
+      currentImageIndex = 0;
+      
+      modalTitle.textContent = `${item.name} - ${item.fname}`;
+      updateModalImage();
+      createThumbnails();
+      
+      imageModal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Update main modal image
+    function updateModalImage() {
+      if (currentImages.length > 0) {
+        mainModalImage.src = currentImages[currentImageIndex];
+        mainModalImage.onerror = () => handleImageError(mainModalImage);
+        
+        // Update thumbnails
+        const thumbnails = thumbnailContainer.querySelectorAll('.thumbnail');
+        thumbnails.forEach((thumb, index) => {
+          thumb.classList.toggle('active', index === currentImageIndex);
+        });
+      }
+    }
+
+    // Create thumbnails
+    function createThumbnails() {
+      thumbnailContainer.innerHTML = '';
+      
+      currentImages.forEach((imgSrc, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imgSrc;
+        thumbnail.className = 'thumbnail';
+        thumbnail.alt = `Image ${index + 1}`;
+        
+        if (index === currentImageIndex) {
+          thumbnail.classList.add('active');
+        }
+        
+        thumbnail.onerror = () => handleImageError(thumbnail);
+        thumbnail.addEventListener('click', () => {
+          currentImageIndex = index;
+          updateModalImage();
+        });
+        
+        thumbnailContainer.appendChild(thumbnail);
+      });
+    }
+
+    // Navigate images
+    function navigateImage(direction) {
+      if (currentImages.length === 0) return;
+      
+      if (direction === 'next') {
+        currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+      } else {
+        currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+      }
+      
+      updateModalImage();
+    }
+
+    // Close modal
+    function closeImageModal() {
+      imageModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Modal event listeners
+    closeModal.addEventListener('click', closeImageModal);
+    prevImage.addEventListener('click', () => navigateImage('prev'));
+    nextImage.addEventListener('click', () => navigateImage('next'));
+
+    // Close modal when clicking outside
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) {
+        closeImageModal();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (imageModal.style.display === 'block') {
+        switch(e.key) {
+          case 'Escape':
+            closeImageModal();
+            break;
+          case 'ArrowLeft':
+            navigateImage('prev');
+            break;
+          case 'ArrowRight':
+            navigateImage('next');
+            break;
+        }
+      }
+    });
+
+    // Populate category dropdown
+    function populateCategoryFilter(data) {
+      const categories = [...new Set(data.map(item => item.category.trim()))];
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categoryFilter.appendChild(option);
+      });
+    }
+
+    // Display results
+    function displayResults(items, page = 1) {
+      resultsContainer.innerHTML = '';
+      const totalItems = items.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const itemsToShow = items.slice(startIndex, endIndex);
+
+      if (itemsToShow.length === 0) {
+        notFoundMessage.style.display = 'block';
+        paginationContainer.innerHTML = '';
+        return;
+      }
+
+      notFoundMessage.style.display = 'none';
+
+      itemsToShow.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const isNew = item.New_item && item.New_item.toLowerCase() === 'yes';
+        const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i><span class="new">New</span>' : '';
+
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" onclick="openImageModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+          <div class="card-body">
+            <div class="card-title-line">
+              <h2>${item.name} ${newIcon}</h2>
+              <i class="fa-regular fa-heart favorite-icon" data-id="${item.name}"></i>
+            </div>
+            <p><strong>Full Name:</strong> ${item.fname}</p>
+            <p><strong>Category:</strong> ${item.category}</p>
+            <p><strong>Colors:</strong> ${item.colors}</p>
+            <p><strong>Sizes:</strong> ${item.sizes}</p>
+            <p><strong>For:</strong> ${item.forthe}</p>
+            <p><strong>Stock:</strong> ${item.Stock}</p>
+            <p><strong>Date:</strong> ${item.Date}</p>
+            <button class="view-btn" onclick="openImageModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">${item.status}</button>
+          </div>
+        `;
+
+        // Handle image error for card images
+        const cardImage = card.querySelector('img');
+        cardImage.onerror = () => handleImageError(cardImage);
+
+        resultsContainer.appendChild(card);
+      });
+
+      renderPagination(totalPages, page, items);
+      setupFavoriteButtons();
+    }
+
+    // Make openImageModal globally accessible
+    window.openImageModal = openImageModal;
+
+    // Render pagination
+    function renderPagination(totalPages, currentPage, items) {
+      paginationContainer.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      function createButton(pageNum, label = null) {
+        const btn = document.createElement('button');
+        btn.textContent = label || pageNum;
+        btn.className = pageNum === currentPage ? 'page-btn active' : 'page-btn';
+        btn.addEventListener('click', () => {
+          displayResults(items, pageNum);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        paginationContainer.appendChild(btn);
+      }
+
+      if (totalPages <= 5) {
+        for (let i = 1; i <= totalPages; i++) {
+          createButton(i);
+        }
+        return;
+      }
+
+      createButton(1);
+
+      if (currentPage > 3) {
+        const dots = document.createElement('span');
+        dots.textContent = '...';
+        dots.style.padding = '10px';
+        dots.style.color = '#666';
+        paginationContainer.appendChild(dots);
+      }
+
+      let start = Math.max(2, currentPage - 1);
+      let end = Math.min(totalPages - 1, currentPage + 1);
+
+      if (currentPage === 1) end = 3;
+      if (currentPage === totalPages) start = totalPages - 2;
+
+      for (let i = start; i <= end; i++) {
+        if (i > 1 && i < totalPages) createButton(i);
+      }
+
+      if (currentPage < totalPages - 2) {
+        const dots = document.createElement('span');
+        dots.textContent = '...';
+        dots.style.padding = '10px';
+        dots.style.color = '#666';
+        paginationContainer.appendChild(dots);
+      }
+
+      createButton(totalPages);
+    }
+
+    // Handle favorites
+    function setupFavoriteButtons() {
+      const icons = document.querySelectorAll('.favorite-icon');
+
+      icons.forEach(icon => {
+        const itemName = icon.dataset.id;
+        const item = sortedAdventures.find(i => i.name === itemName);
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        const isFavorited = favorites.some(f => f.name === item.name);
+        if (isFavorited) {
+          icon.classList.remove('fa-regular');
+          icon.classList.add('fa-solid');
+          icon.style.color = 'red';
+        }
+
+        icon.addEventListener('click', () => {
+          let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+          const index = favorites.findIndex(f => f.name === item.name);
+
+          if (index > -1) {
+            favorites.splice(index, 1);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-regular');
+            icon.style.color = 'gray';
+            showNotification(`${item.name} removed from favorites 🥺💔`, 'error');
+          } else {
+            favorites.push(item);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            icon.classList.remove('fa-regular');
+            icon.classList.add('fa-solid');
+            icon.style.color = 'red';
+            showNotification(`${item.name} ✨ added to favorites 🥳`, 'success');
+          }
+        });
+      });
+    }
+
+    // Toast notification
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.className = `notification-toast ${type}`;
+      notification.innerText = message;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.classList.add('show');
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            if (document.body.contains(notification)) {
+              document.body.removeChild(notification);
+            }
+          }, 300);
+        }, 2500);
+      }, 100);
+    }
+
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      filteredItems = sortedAdventures.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.fname.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
+      currentPage = 1;
+      displayResults(filteredItems, currentPage);
+    });
+
+    // Clear search
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      categoryFilter.value = '';
+      filteredItems = sortedAdventures;
+      currentPage = 1;
+      displayResults(filteredItems, currentPage);
+    });
+
+    // Category filter
+    categoryFilter.addEventListener('change', () => {
+      const selectedCategory = categoryFilter.value;
+      filteredItems = selectedCategory === ''
+        ? sortedAdventures
+        : sortedAdventures.filter(item => item.category.trim() === selectedCategory);
+      currentPage = 1;
+      displayResults(filteredItems, currentPage);
+    });
+
+    // Initialize
+    populateCategoryFilter(sortedAdventures);
+    filteredItems = sortedAdventures;
+    displayResults(filteredItems, currentPage);
+  </script>
 </body>
 </html>
