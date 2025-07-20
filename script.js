@@ -592,44 +592,348 @@
 
 
 
+// const searchInput = document.getElementById('searchInput');
+// const categoryFilter = document.getElementById('categoryFilter');
+// const resultsContainer = document.getElementById('resultsContainer');
+// const notFoundMessage = document.getElementById('notFound');
+// const clearBtn = document.querySelector('.clear-btn');
+
+// // Pagination setup
+// const itemsPerPage = 5;
+// let currentPage = 1;
+// let filteredItems = [];
+
+// // Create pagination container
+// const paginationContainer = document.createElement('div');
+// paginationContainer.className = 'pagination';
+// document.body.appendChild(paginationContainer);
+
+// // Sort by Date (newest first)
+// const sortedAdventures = adventures.slice().sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+// // Populate dropdown
+// function populateCategoryFilter(data) {
+//   const categories = [...new Set(data.map(item => item.category.trim()))];
+//   categories.forEach(category => {
+//     const option = document.createElement('option');
+//     option.value = category;
+//     option.textContent = category;
+//     categoryFilter.appendChild(option);
+//   });
+// }
+
+// // Render items
+// function displayResults(items, page = 1) {
+//   resultsContainer.innerHTML = '';
+//   const totalItems = items.length;
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
+//   const startIndex = (page - 1) * itemsPerPage;
+//   const endIndex = startIndex + itemsPerPage;
+//   const itemsToShow = items.slice(startIndex, endIndex);
+
+//   if (itemsToShow.length === 0) {
+//     notFoundMessage.style.display = 'block';
+//     paginationContainer.innerHTML = '';
+//     return;
+//   }
+
+//   notFoundMessage.style.display = 'none';
+
+//   itemsToShow.forEach(item => {
+//     const card = document.createElement('div');
+//     card.className = 'card';
+
+//     const isNew = item.New_item && item.New_item.toLowerCase() === 'yes';
+//     const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i><span class="new" >New</span>' : '';
+
+//     card.innerHTML = `
+//       <img src="${item.image}" alt="${item.name}">
+//       <div class="card-body">
+//         <div class="card-title-line">
+        
+//           <h2 class="new-icon">${item.name} ${newIcon}</h2>
+//           <i class="fa-regular fa-heart favorite-icon" data-id="${item.name}"></i>
+//         </div>
+//         <p><strong>Full Name:</strong> ${item.fname}</p>
+//         <p><strong>Category:</strong> ${item.category}</p>
+//         <p><strong>Colors:</strong> ${item.colors}</p>
+//         <p><strong>Sizes:</strong> ${item.sizes}</p>
+//         <p><strong>For:</strong> ${item.forthe}</p>
+//         <p><strong>Stock:</strong> ${item.Stock}</p>
+//         <p><strong>Date:</strong> ${item.Date}</p>
+//         <a href="${item.link}" target="_blank" class="view-btn">${item.status}</a>
+//       </div>
+//     `;
+//     resultsContainer.appendChild(card);
+//   });
+
+//   renderPagination(totalPages, page, items);
+//   setupFavoriteButtons();
+// }
+
+// // Render pagination buttons
+// function renderPagination(totalPages, currentPage, items) {
+//   paginationContainer.innerHTML = '';
+
+//   function createButton(pageNum, label = null) {
+//     const btn = document.createElement('button');
+//     btn.textContent = label || pageNum;
+//     btn.className = pageNum === currentPage ? 'page-btn active' : 'page-btn';
+//     btn.addEventListener('click', () => {
+//       displayResults(items, pageNum);
+//       window.scrollTo({ top: 0, behavior: 'smooth' });
+//     });
+//     paginationContainer.appendChild(btn);
+//   }
+
+//   if (totalPages <= 5) {
+//     for (let i = 1; i <= totalPages; i++) {
+//       createButton(i);
+//     }
+//     return;
+//   }
+
+//   createButton(1);
+
+//   if (currentPage > 3) {
+//     const dots = document.createElement('span');
+//     dots.textContent = '...';
+//     paginationContainer.appendChild(dots);
+//   }
+
+//   let start = Math.max(2, currentPage - 1);
+//   let end = Math.min(totalPages - 1, currentPage + 1);
+
+//   if (currentPage === 1) end = 3;
+//   if (currentPage === totalPages) start = totalPages - 2;
+
+//   for (let i = start; i <= end; i++) {
+//     if (i > 1 && i < totalPages) createButton(i);
+//   }
+
+//   if (currentPage < totalPages - 2) {
+//     const dots = document.createElement('span');
+//     dots.textContent = '...';
+//     paginationContainer.appendChild(dots);
+//   }
+
+//   createButton(totalPages);
+// }
+
+// // Handle favorites
+// function setupFavoriteButtons() {
+//   const icons = document.querySelectorAll('.favorite-icon');
+
+//   icons.forEach(icon => {
+//     const itemName = icon.dataset.id;
+//     const item = sortedAdventures.find(i => i.name === itemName);
+//     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+//     const isFavorited = favorites.some(f => f.name === item.name);
+//     if (isFavorited) {
+//       icon.classList.remove('fa-regular');
+//       icon.classList.add('fa-solid');
+//       icon.style.color = 'red';
+//     }
+
+//     icon.addEventListener('click', () => {
+//       let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+//       const index = favorites.findIndex(f => f.name === item.name);
+
+//       if (index > -1) {
+//         favorites.splice(index, 1);
+//         localStorage.setItem('favorites', JSON.stringify(favorites));
+//         icon.classList.remove('fa-solid');
+//         icon.classList.add('fa-regular');
+//         icon.style.color = 'gray';
+//         showNotification(`${item.name} removed from favorites🥺💔`, 'error');
+//       } else {
+//         favorites.push(item);
+//         localStorage.setItem('favorites', JSON.stringify(favorites));
+//         icon.classList.remove('fa-regular');
+//         icon.classList.add('fa-solid');
+//         icon.style.color = 'red';
+//         showNotification(`${item.name}✨ added to favorites 🥳`, 'success');
+//       }
+//     });
+//   });
+// }
+
+// // Toast notification
+// function showNotification(message, type = 'success') {
+//   const notification = document.createElement('div');
+//   notification.className = `notification-toast ${type}`;
+//   notification.innerText = message;
+//   document.body.appendChild(notification);
+
+//   setTimeout(() => {
+//     notification.classList.add('show');
+//     setTimeout(() => {
+//       notification.classList.remove('show');
+//       setTimeout(() => document.body.removeChild(notification), 300);
+//     }, 2500);
+//   }, 100);
+// }
+
+// // Search
+// searchInput.addEventListener('input', () => {
+//   const query = searchInput.value.trim().toLowerCase();
+//   filteredItems = sortedAdventures.filter(item =>
+//     item.name.toLowerCase().includes(query)
+//   );
+//   currentPage = 1;
+//   displayResults(filteredItems, currentPage);
+// });
+
+// // Clear search
+// clearBtn.addEventListener('click', () => {
+//   searchInput.value = '';
+//   filteredItems = sortedAdventures;
+//   currentPage = 1;
+//   displayResults(filteredItems, currentPage);
+// });
+
+// // Category filter
+// categoryFilter.addEventListener('change', () => {
+//   const selectedCategory = categoryFilter.value;
+//   filteredItems = selectedCategory === ''
+//     ? sortedAdventures
+//     : sortedAdventures.filter(item => item.category.trim() === selectedCategory);
+//   currentPage = 1;
+//   displayResults(filteredItems, currentPage);
+// });
+
+// // Init
+// populateCategoryFilter(sortedAdventures);
+// categoryFilter.value = '';
+// filteredItems = sortedAdventures;
+// displayResults(filteredItems, currentPage);
+
+
+// DOM Elements
 const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
 const resultsContainer = document.getElementById('resultsContainer');
 const notFoundMessage = document.getElementById('notFound');
 const clearBtn = document.querySelector('.clear-btn');
 
-// Pagination setup
+// Modal Elements
+const imageModal = document.getElementById('imageModal');
+const modalTitle = document.getElementById('modalTitle');
+const mainModalImage = document.getElementById('mainModalImage');
+const closeModal = document.getElementById('closeModal');
+const prevImage = document.getElementById('prevImage');
+const nextImage = document.getElementById('nextImage');
+const thumbnailContainer = document.getElementById('thumbnailContainer');
+
+// Pagination
 const itemsPerPage = 5;
 let currentPage = 1;
 let filteredItems = [];
+let currentImages = [];
+let currentImageIndex = 0;
 
-// Create pagination container
+// Pagination container
 const paginationContainer = document.createElement('div');
 paginationContainer.className = 'pagination';
 document.body.appendChild(paginationContainer);
 
-// Sort by Date (newest first)
+// Sort items
 const sortedAdventures = adventures.slice().sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
-// Populate dropdown
+// Error fallback
+function handleImageError(img, fallback = './source/placeholder.jpg') {
+  img.onerror = null;
+  img.src = fallback;
+  img.alt = 'Image not found';
+}
+
+// Get images array for modal
+function getItemImages(item) {
+  return [item.image, item.extraimage1, item.extraimage2, item.extraimage3].filter(Boolean);
+}
+
+// Modal Controls
+function openImageModal(item) {
+  currentImages = getItemImages(item);
+  currentImageIndex = 0;
+  modalTitle.textContent = `${item.name} - ${item.fname}`;
+  updateModalImage();
+  createThumbnails();
+  imageModal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeImageModal() {
+  imageModal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+function updateModalImage() {
+  if (currentImages.length > 0) {
+    mainModalImage.src = currentImages[currentImageIndex];
+    mainModalImage.onerror = () => handleImageError(mainModalImage);
+    const thumbnails = thumbnailContainer.querySelectorAll('.thumbnail');
+    thumbnails.forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === currentImageIndex);
+    });
+  }
+}
+function createThumbnails() {
+  thumbnailContainer.innerHTML = '';
+  currentImages.forEach((src, i) => {
+    const thumb = document.createElement('img');
+    thumb.src = src;
+    thumb.className = 'thumbnail';
+    thumb.alt = `Image ${i + 1}`;
+    if (i === currentImageIndex) thumb.classList.add('active');
+    thumb.onerror = () => handleImageError(thumb);
+    thumb.addEventListener('click', () => {
+      currentImageIndex = i;
+      updateModalImage();
+    });
+    thumbnailContainer.appendChild(thumb);
+  });
+}
+function navigateImage(direction) {
+  if (!currentImages.length) return;
+  currentImageIndex = direction === 'next'
+    ? (currentImageIndex + 1) % currentImages.length
+    : (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+  updateModalImage();
+}
+
+// Modal Events
+closeModal?.addEventListener('click', closeImageModal);
+prevImage?.addEventListener('click', () => navigateImage('prev'));
+nextImage?.addEventListener('click', () => navigateImage('next'));
+imageModal?.addEventListener('click', (e) => {
+  if (e.target === imageModal) closeImageModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (imageModal.style.display === 'block') {
+    if (e.key === 'Escape') closeImageModal();
+    if (e.key === 'ArrowLeft') navigateImage('prev');
+    if (e.key === 'ArrowRight') navigateImage('next');
+  }
+});
+
+// Filter UI
 function populateCategoryFilter(data) {
   const categories = [...new Set(data.map(item => item.category.trim()))];
-  categories.forEach(category => {
+  categories.forEach(cat => {
     const option = document.createElement('option');
-    option.value = category;
-    option.textContent = category;
+    option.value = cat;
+    option.textContent = cat;
     categoryFilter.appendChild(option);
   });
 }
 
-// Render items
+// Display items
 function displayResults(items, page = 1) {
   resultsContainer.innerHTML = '';
   const totalItems = items.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToShow = items.slice(startIndex, endIndex);
+  const start = (page - 1) * itemsPerPage;
+  const itemsToShow = items.slice(start, start + itemsPerPage);
 
   if (itemsToShow.length === 0) {
     notFoundMessage.style.display = 'block';
@@ -642,16 +946,14 @@ function displayResults(items, page = 1) {
   itemsToShow.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
-
-    const isNew = item.New_item && item.New_item.toLowerCase() === 'yes';
-    const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i><span class="new" >New</span>' : '';
+    const isNew = item.New_item?.toLowerCase() === 'yes';
+    const newIcon = isNew ? '<i class="fa-solid fa-star new-item-icon"></i><span class="new">New</span>' : '';
 
     card.innerHTML = `
-      <img src="${item.image}" alt="${item.name}">
+      <img src="${item.image}" alt="${item.name}" onclick='openImageModal(${JSON.stringify(item).replace(/"/g, '&quot;')})'>
       <div class="card-body">
         <div class="card-title-line">
-        
-          <h2 class="new-icon">${item.name} ${newIcon}</h2>
+          <h2>${item.name} ${newIcon}</h2>
           <i class="fa-regular fa-heart favorite-icon" data-id="${item.name}"></i>
         </div>
         <p><strong>Full Name:</strong> ${item.fname}</p>
@@ -661,9 +963,12 @@ function displayResults(items, page = 1) {
         <p><strong>For:</strong> ${item.forthe}</p>
         <p><strong>Stock:</strong> ${item.Stock}</p>
         <p><strong>Date:</strong> ${item.Date}</p>
-        <a href="${item.link}" target="_blank" class="view-btn">${item.status}</a>
+                <p><strong>Price: </strong> ${item.price}</p>
+        <button class="view-btn" onclick='openImageModal(${JSON.stringify(item).replace(/"/g, '&quot;')})'>${item.status}</button>
       </div>
     `;
+
+    card.querySelector('img').onerror = () => handleImageError(card.querySelector('img'));
     resultsContainer.appendChild(card);
   });
 
@@ -671,140 +976,148 @@ function displayResults(items, page = 1) {
   setupFavoriteButtons();
 }
 
-// Render pagination buttons
+// Pagination
 function renderPagination(totalPages, currentPage, items) {
   paginationContainer.innerHTML = '';
+  if (totalPages <= 1) return;
 
-  function createButton(pageNum, label = null) {
+  function createButton(p) {
     const btn = document.createElement('button');
-    btn.textContent = label || pageNum;
-    btn.className = pageNum === currentPage ? 'page-btn active' : 'page-btn';
+    btn.textContent = p;
+    btn.className = p === currentPage ? 'page-btn active' : 'page-btn';
     btn.addEventListener('click', () => {
-      displayResults(items, pageNum);
+      displayResults(items, p);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     paginationContainer.appendChild(btn);
   }
 
-  if (totalPages <= 5) {
-    for (let i = 1; i <= totalPages; i++) {
-      createButton(i);
-    }
-    return;
-  }
-
   createButton(1);
-
-  if (currentPage > 3) {
-    const dots = document.createElement('span');
-    dots.textContent = '...';
-    paginationContainer.appendChild(dots);
+  if (currentPage > 3) paginationContainer.append('...');
+  for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+    createButton(i);
   }
-
-  let start = Math.max(2, currentPage - 1);
-  let end = Math.min(totalPages - 1, currentPage + 1);
-
-  if (currentPage === 1) end = 3;
-  if (currentPage === totalPages) start = totalPages - 2;
-
-  for (let i = start; i <= end; i++) {
-    if (i > 1 && i < totalPages) createButton(i);
-  }
-
-  if (currentPage < totalPages - 2) {
-    const dots = document.createElement('span');
-    dots.textContent = '...';
-    paginationContainer.appendChild(dots);
-  }
-
-  createButton(totalPages);
+  if (currentPage < totalPages - 2) paginationContainer.append('...');
+  if (totalPages > 1) createButton(totalPages);
 }
 
-// Handle favorites
+// Favorites
 function setupFavoriteButtons() {
-  const icons = document.querySelectorAll('.favorite-icon');
-
-  icons.forEach(icon => {
+  document.querySelectorAll('.favorite-icon').forEach(icon => {
     const itemName = icon.dataset.id;
     const item = sortedAdventures.find(i => i.name === itemName);
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
-    const isFavorited = favorites.some(f => f.name === item.name);
-    if (isFavorited) {
+    if (favorites.some(f => f.name === item.name)) {
       icon.classList.remove('fa-regular');
       icon.classList.add('fa-solid');
       icon.style.color = 'red';
     }
 
     icon.addEventListener('click', () => {
-      let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
       const index = favorites.findIndex(f => f.name === item.name);
-
       if (index > -1) {
         favorites.splice(index, 1);
         localStorage.setItem('favorites', JSON.stringify(favorites));
         icon.classList.remove('fa-solid');
         icon.classList.add('fa-regular');
         icon.style.color = 'gray';
-        showNotification(`${item.name} removed from favorites🥺💔`, 'error');
+        showNotification(`${item.name} removed from favorites 🥺💔`, 'error');
       } else {
         favorites.push(item);
         localStorage.setItem('favorites', JSON.stringify(favorites));
         icon.classList.remove('fa-regular');
         icon.classList.add('fa-solid');
         icon.style.color = 'red';
-        showNotification(`${item.name}✨ added to favorites 🥳`, 'success');
+        showNotification(`${item.name} ✨ added to favorites 🥳`, 'success');
       }
     });
   });
 }
 
-// Toast notification
+// Toast message
 function showNotification(message, type = 'success') {
-  const notification = document.createElement('div');
-  notification.className = `notification-toast ${type}`;
-  notification.innerText = message;
-  document.body.appendChild(notification);
+  const note = document.createElement('div');
+  note.className = `notification-toast ${type}`;
+  note.innerText = message;
+  document.body.appendChild(note);
 
   setTimeout(() => {
-    notification.classList.add('show');
+    note.classList.add('show');
     setTimeout(() => {
-      notification.classList.remove('show');
-      setTimeout(() => document.body.removeChild(notification), 300);
+      note.classList.remove('show');
+      setTimeout(() => note.remove(), 300);
     }, 2500);
   }, 100);
 }
 
 // Search
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.trim().toLowerCase();
+searchInput?.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
   filteredItems = sortedAdventures.filter(item =>
-    item.name.toLowerCase().includes(query)
+    item.name.toLowerCase().includes(query) ||
+    item.fname.toLowerCase().includes(query) ||
+    item.category.toLowerCase().includes(query)
   );
   currentPage = 1;
   displayResults(filteredItems, currentPage);
 });
 
-// Clear search
-clearBtn.addEventListener('click', () => {
+// Clear
+clearBtn?.addEventListener('click', () => {
   searchInput.value = '';
+  categoryFilter.value = '';
   filteredItems = sortedAdventures;
   currentPage = 1;
   displayResults(filteredItems, currentPage);
 });
 
-// Category filter
-categoryFilter.addEventListener('change', () => {
-  const selectedCategory = categoryFilter.value;
-  filteredItems = selectedCategory === ''
+// Category change
+categoryFilter?.addEventListener('change', () => {
+  const selected = categoryFilter.value;
+  filteredItems = selected === ''
     ? sortedAdventures
-    : sortedAdventures.filter(item => item.category.trim() === selectedCategory);
+    : sortedAdventures.filter(i => i.category.trim() === selected);
   currentPage = 1;
   displayResults(filteredItems, currentPage);
 });
 
 // Init
 populateCategoryFilter(sortedAdventures);
-categoryFilter.value = '';
 filteredItems = sortedAdventures;
 displayResults(filteredItems, currentPage);
+
+
+function shareFavorites() {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  if (favorites.length === 0) {
+    alert('No favorites to share.');
+    return;
+  }
+
+  const shareText = favorites.map(item =>
+    `• ${item.name} - ${item.fname} (${item.category})`
+  ).join('\n');
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'My Favorite Items',
+      text: `Here are my favorite items:\n\n${shareText}`,
+    }).catch(err => {
+      console.error('Sharing failed:', err);
+    });
+  } else {
+    copyToClipboard(shareText);
+    alert('Favorites copied to clipboard. You can paste and share it manually.');
+  }
+}
+
+function copyToClipboard(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+}

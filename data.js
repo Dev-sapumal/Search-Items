@@ -12,6 +12,7 @@ const adventures = [
     "Stock": "Stock Available",
     "New_item": "yes",
     "Date": "2030-10-01",
+    "price": "LKR 1599.90",
     "extraimage1": "./source/133.jpg",
     "extraimage2": "./source/133.jpg",
     "extraimage3": "./source/133.jpg",
