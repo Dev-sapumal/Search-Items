@@ -1121,3 +1121,21 @@ function copyToClipboard(text) {
   document.execCommand('copy');
   document.body.removeChild(textarea);
 }
+
+
+
+function showWelcomePopup() {
+  const today = new Date().toISOString().split('T')[0]; // e.g., "2025-07-20"
+  const lastShownDate = localStorage.getItem('welcomeShownDate');
+
+  if (lastShownDate !== today) {
+    document.getElementById('welcomePopup').style.display = 'flex';
+    localStorage.setItem('welcomeShownDate', today);
+  }
+}
+
+function closeWelcomePopup() {
+  document.getElementById('welcomePopup').style.display = 'none';
+}
+
+window.addEventListener('load', showWelcomePopup);
