@@ -1,20 +1,4 @@
 const adventures = [
-  {
-  "name": "00151",
-  "fname": "00151TW0204",
-  "category": "Teen Walk",
-  "colors": "Black | Pink | Beidge",
-  "sizes": "4 5 6 7 8",
-  "forthe": "Women",
-  "image": "source/Teenwalk/151.jpg",
-  "link": "template.html",
-  "status": "View Image",
-  "Stock": "Stock Available",
-  "New_item": "",
-  "Date": "2025-09-29",
-  "price": "N/A",
-  "extraimage1": "source/Teenwalk/151.jpg"
-},
 {
   "name": "00148",
   "fname": "00148TW0204",
@@ -422,7 +406,7 @@ const adventures = [
   "colors": "Black | Pink | Beidge",
   "sizes": "4 5 6 7 8",
   "forthe": "Women",
-  "image": "source/Teenwalk/0014.jpg",
+  "image": "source/Teenwalk/014.jpg",
   "link": "template.html",
   "status": "View Image",
   "Stock": "Stock Available",
@@ -438,7 +422,7 @@ const adventures = [
   "colors": "Black | Pink | Beidge",
   "sizes": "4 5 6 7 8",
   "forthe": "Women",
-  "image": "source/Teenwalk/0013.jpg",
+  "image": "source/Teenwalk/013.jpg",
   "link": "template.html",
   "status": "View Image",
   "Stock": "Stock Available",
@@ -1502,7 +1486,157 @@ const adventures = [
     "Date": "2025-09-29",
     "price": "N/A",
     "extraimage1": "source/Children/204.jpg"
+  },
+
+  {
+  "name": "00151",
+  "fname": "00151TW0204",
+  "category": "Teen Walk",
+  "colors": "Black | Pink | Beidge",
+  "sizes": "4 5 6 7 8",
+  "forthe": "Women",
+  "image": "source/Teenwalk/151.jpg",
+  "link": "template.html",
+  "status": "View Image",
+  "Stock": "Stock Available",
+  "New_item": "",
+  "Date": "2025-09-29",
+  "price": "N/A",
+  "extraimage1": "source/Teenwalk/151.jpg"
+},
+
+
+
+  {
+    "name": "01660",
+    "fname": "01660SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+  "image": "source/Temp/1660.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1660.jpg"
+  },
+  {
+    "name": "01671",
+    "fname": "01671SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1671.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1671.jpg"
+  },
+  {
+    "name": "01692",
+    "fname": "01692SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1692.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1692.jpg"
+  },
+  {
+    "name": "01694",
+    "fname": "01694SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1694.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1694.jpg"
+  },
+  {
+    "name": "01695",
+    "fname": "01695SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1695.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1695.jpg"
+  },
+  {
+    "name": "01696",
+    "fname": "01696SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1696.jpg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1696.jpg"
+  },
+  {
+    "name": "01697",
+    "fname": "01697SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Temp/1697.jpeg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/Temp/1697.jpeg"
+  },
+
+
+
+
+{
+    "name": "01699",
+    "fname": "01699SL0204",
+    "category": "STYLE",
+    "colors": "Black | Pink | Beidge",
+    "sizes": "4 5 6 7 8",
+    "forthe": "Women",
+    "image": "source/Style PU/1699.jpeg",
+    "link": "template.html",
+    "status": "View Image",
+    "Stock": "Stock Available",
+    "New_item": "",
+    "Date": "2025-09-29",
+    "price": "N/A",
+    "extraimage1": "source/fv.jpg"
   }
-
 ];
-
